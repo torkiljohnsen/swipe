@@ -89,11 +89,10 @@
 			
 			// check to see if more than one finger was used and that there is an ending coordinate
 			if (self.touchesCount == 1 && self.currentXTouchPosition != 0) {
-				self.swipeLength = self.geteSwipeLength(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
+				self.swipeLength = self.getSwipeLength(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
 				// if the user swiped more than the minimum length, perform the appropriate action
 				if (self.swipeLength >= self.options.minSwipeLength) {
-					var swipeAngle = self.getSwipeAngle(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
-					var swipeDirection = self.determineSwipeDirection(swipeAngle);
+					var swipeDirection = self.getSwipeDirection(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
 					callback(swipeDirection); // callback with the swipe direction
 					self.touchCancel(event); // reset the variables
 				} else {
@@ -116,6 +115,20 @@
 			self.swipeLength = 0;
 		},
 
+		getSwipeDirection: function (startXPos, currentXPos, startYPos, currentYPos) {
+			var swipeAngle = this.getSwipeAngle(startXPos, currentXPos, startYPos, currentYPos);
+
+			if (swipeAngle <= 45 || swipeAngle >= 315) {
+				return 'left';
+			} else if (swipeAngle >= 135 && swipeAngle <= 225) {
+				return 'right';
+			} else if (swipeAngle > 45 && swipeAngle < 135) {
+				return 'down';
+			} else {
+				return 'up';
+			}
+		},
+
 		getSwipeLength: function (startXPos, currentXPos, startYPos, currentYPos) {
 			// determine the length of the swipe using distance formula
 			return Math.round(Math.sqrt(Math.pow(currentXPos - startXPos, 2) + Math.pow(currentYPos - startYPos, 2)));
@@ -128,20 +141,6 @@
 			var swipeAngle = Math.round(r * 180 / Math.PI); //angle in degrees
 			if (swipeAngle < 0) { swipeAngle = 360 - Math.abs(swipeAngle); }
 			return swipeAngle;
-		},
-
-		determineSwipeDirection: function (swipeAngle) {
-			if ((swipeAngle <= 45) && (swipeAngle >= 0)) {
-				return 'left';
-			} else if ((swipeAngle <= 360) && (swipeAngle >= 315)) {
-				return 'left';
-			} else if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
-				return 'right';
-			} else if ((swipeAngle > 45) && (swipeAngle < 135)) {
-				return 'down';
-			} else {
-				return 'up';
-			}
 		}
 	});
 })(jQuery);
