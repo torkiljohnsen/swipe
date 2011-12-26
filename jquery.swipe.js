@@ -89,7 +89,7 @@
 			
 			// check to see if more than one finger was used and that there is an ending coordinate
 			if (self.touchesCount == 1 && self.currentXTouchPosition != 0) {
-				self.swipeLength = self.calculateSwipeAngle(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
+				self.swipeLength = self.geteSwipeLength(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
 				// if the user swiped more than the minimum length, perform the appropriate action
 				if (self.swipeLength >= self.options.minSwipeLength) {
 					var swipeAngle = self.getSwipeAngle(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
@@ -116,7 +116,7 @@
 			self.swipeLength = 0;
 		},
 
-		calculateSwipeAngle: function (startXPos, currentXPos, startYPos, currentYPos) {
+		getSwipeLength: function (startXPos, currentXPos, startYPos, currentYPos) {
 			// determine the length of the swipe using distance formula
 			return Math.round(Math.sqrt(Math.pow(currentXPos - startXPos, 2) + Math.pow(currentYPos - startYPos, 2)));
 		},
