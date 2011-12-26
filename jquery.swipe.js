@@ -111,7 +111,6 @@
 
 				if (Math.abs(deltaY) < 15) {
 					event.preventDefault();
-					self.callback('preventing default');
 				}
 			} else {
 				self.touchCancel(event);
@@ -131,6 +130,7 @@
 					callback(swipeDirection); // callback with the swipe direction
 					self.touchCancel(event); // reset the variables
 				} else {
+					// swipe was too short
 					self.touchCancel(event);
 				}
 			} else {
