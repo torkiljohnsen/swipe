@@ -138,7 +138,9 @@
             var y = currentYPos - startYPos;
             var r = Math.atan2(y, x); //angle in radians (Cartesian system)
             var swipeAngle = Math.round(r * 180 / Math.PI); //angle in degrees
-            if (swipeAngle < 0) { swipeAngle = 360 - Math.abs(swipeAngle); }
+            if (swipeAngle < 0) {
+				swipeAngle = 360 - Math.abs(swipeAngle); 
+			}
             return swipeAngle;
         }
     });
