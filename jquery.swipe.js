@@ -13,9 +13,7 @@
 	$.widget("ui.swipe", {
 		options: {
 			minSwipeLength: 65, // the shortest distance the user may swipe - the lower the number the more sensitive
-			minMouseSwipeLength: 300,
 			preventDefault: false, //used on TouchStart - setting this to true would negate things like button press from working, etc...
-			includeMouseSwipe: false  //set to true to enable for mouse swipe
 		},
 
 		touchesCount: 0, //number of finders
@@ -25,10 +23,6 @@
 		currentYTouchPosition: 0,
 		swipeLength: 0,
 		previousPosition: {},
-
-		initialXMousePosition: null, //for mouse
-		initialYMousePosition: null, //for mouse
-
 
 		swiped: function (e, ui) { },
 
@@ -54,36 +48,8 @@
 					});
 				}
 			});
-			if (self.options.includeMouseSwipe) {
-				$touch.bind({
-					"mousedown": function (event) {
-						self.initialXMousePosition = event.pageX;
-						self.initialYMousePosition = event.pageY;
-						//event.stopPropagation();
-					},
-					"mouseup": function (event) {
-						var x = event.pageX;
-						var y = event.pageY;
-						//event.stopPropagation();
-						event.preventDefault();
-
-						var mouseSwipeLength = self.calculateSwipeAngle(self.initialXMousePosition, x, self.initialYMousePosition, y);
-						// if the user swiped more than the minimum length, perform the appropriate action
-						if (mouseSwipeLength >= self.options.minMouseSwipeLength) {
-							var swipeAngle = self.getSwipeAngle(self.initialXMousePosition, x, self.initialYMousePosition, y);
-							var swipeDirection = self.determineSwipeDirection(swipeAngle);
-
-							if (swipeDirection != null) {
-								self._trigger('swiped', event, { swipeDirection: swipeDirection });
-							}
-						}
-						self.initialXMousePosition = null;
-						self.initialYMousePosition = null;
-					}
-				});
-			}
-
 		},
+
 		touchStart: function (event) {
 			var self = this;
 
