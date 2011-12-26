@@ -1,19 +1,7 @@
-see sample.htm
+Adapted from https://github.com/sgentile/jquery.swipe
 
-uses touch support for ipad - (tested on ipad only at this point - *should* work on android)
-supports mouse as well
+Functionality: Detects swipes in all four directions, but allows for vertical scrolling.
 
-options:
-see jquery.swipe.js options
+More changes coming.
 
-minSwipeLength: 65, // the shortest distance the user may swipe - the lower the number the more sensitive
-minMouseSwipeLength: 20,
-preventDefault :false //used on TouchStart - setting this to true would negate things like button press from working, etc...
-
-ui.swipeDirection returns the swipe direction 'up', 'down', 'left', 'right'
-
-$("#test").swipe({
-	swiped: function (e, ui) {
-		$("#textDirection").html(ui.swipeDirection);
-	}
-}
+see sample.htm, try swiping left and right on the red box. Touch device needed of course.
