@@ -1,9 +1,14 @@
-/*
-* swipe 1.0.1 - jQuery UI Widget
-* https://github.com/sgentile/jquery.swipe
-* Copyright (c) 2011 Steve Gentile (http://twitter.com/stevemgentile)
-* Dual licensed under the MIT and GPL licenses
-*/
+/**
+ * pageSwipe 1.0 - jQuery UI Widget
+ * https://github.com/torkiljohnsen/swipe
+ *
+ * Adapted from https://github.com/sgentile/jquery.swipe
+ *
+ * Copyright (c) 2011 Torkil Johnsen (http://twitter.com/torkiljohnsen)
+ * Copyright (c) 2011 Steve Gentile (http://twitter.com/stevemgentile)
+ * Dual licensed under the MIT and GPL licenses
+ */
+
 (function ($) {
 	$.widget("ui.swipe", {
 		options: {
