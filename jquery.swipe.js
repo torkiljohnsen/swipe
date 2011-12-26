@@ -12,8 +12,7 @@
 (function ($) {
 	$.widget("ui.swipe", {
 		options: {
-			minSwipeLength: 65, // the shortest distance the user may swipe - the lower the number the more sensitive
-			preventDefault: false, //used on TouchStart - setting this to true would negate things like button press from working, etc...
+			minSwipeLength: 65 // the shortest distance the user may swipe - the lower the number the more sensitive
 		},
 
 		touchesCount: 0, //number of finders
