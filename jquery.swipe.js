@@ -82,10 +82,6 @@
 		touchStart: function (event) {
 			var self = this;
 
-			if (self.options.preventDefault) {
-				// disable the standard ability to select the touched object
-				event.preventDefault();
-			}
 			// get the total number of fingers touching the screen
 			self.touchesCount = event.touches.length;
 			// since we're looking for a swipe (single finger) and not a gesture (multiple fingers),
@@ -102,10 +98,16 @@
 
 		touchMove: function (event) {
 			var self = this;
-			event.preventDefault();
+			
 			if (event.touches.length == 1) {
 				self.currentXTouchPosition = event.touches[0].pageX;
 				self.currentYTouchPosition = event.touches[0].pageY;
+				var deltaY = self.currentYTouchPosition - self.startTouchYPosition;
+
+				if (Math.abs(deltaY) < 15) {
+					event.preventDefault();
+					self.callback('preventing default');
+				}
 			} else {
 				self.touchCancel(event);
 			}
@@ -113,7 +115,7 @@
 
 		touchEnd: function (event, callback) {
 			var self = this;
-			event.preventDefault();
+			
 			// check to see if more than one finger was used and that there is an ending coordinate
 			if (self.touchesCount == 1 && self.currentXTouchPosition != 0) {
 				self.swipeLength = self.calculateSwipeAngle(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
