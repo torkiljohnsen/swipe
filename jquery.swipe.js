@@ -76,6 +76,7 @@
 				var deltaY = self.currentYTouchPosition - self.startTouchYPosition;
 
 				if (Math.abs(deltaY) < 15) {
+					// We're not moving vertically, preventing default
 					event.preventDefault();
 				}
 			} else {
