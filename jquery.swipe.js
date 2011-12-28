@@ -115,7 +115,8 @@
         },
 
         getSwipeDirection: function (startXPos, currentXPos, startYPos, currentYPos) {
-            var swipeAngle = this.getSwipeAngle(startXPos, currentXPos, startYPos, currentYPos);
+            var self = this;
+            var swipeAngle = self.getSwipeAngle(startXPos, currentXPos, startYPos, currentYPos);
 
             if (swipeAngle <= 45 || swipeAngle >= 315) {
                 return 'left';
