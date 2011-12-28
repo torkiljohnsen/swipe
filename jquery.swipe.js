@@ -17,6 +17,7 @@
         touchesCount: 0,        // number of finders
         startTouchXPosition: 0, // initial start location  x
         startTouchYPosition: 0, // initial start location  x
+        deltaX: 0,
         elementPosition: undefined,
         currentXTouchPosition: 0,
         currentYTouchPosition: 0,
@@ -55,10 +56,15 @@
 
             // get the total number of fingers touching the screen
             self.touchesCount = event.touches.length;
+
             // since we're looking for a swipe (single finger) and not a gesture (multiple fingers),
             // check that only one finger was used
             if (self.touchesCount == 1) {
                 
+                // reset some pr swipe variables
+                self.isScrolling = undefined;
+                self.deltaX      = 0;
+            
                 // get the elements current position
                 if (typeof self.elementPosition == 'undefined') {
                     self.elementPosition = self.element.position().left;
@@ -67,7 +73,6 @@
                 // get the coordinates of the touch
                 self.startTouchXPosition = event.touches[0].pageX;
                 self.startTouchYPosition = event.touches[0].pageY;
-                self.isScrolling = undefined;
 
             } else {
                 // more than one finger touched so cancel
@@ -83,18 +88,18 @@
                 self.currentXTouchPosition = event.touches[0].pageX;
                 self.currentYTouchPosition = event.touches[0].pageY;
 
-                var deltaX = self.currentXTouchPosition - self.startTouchXPosition;
-                var deltaY = self.currentYTouchPosition - self.startTouchYPosition;
+                self.deltaX = self.currentXTouchPosition - self.startTouchXPosition;
+                var deltaY  = self.currentYTouchPosition - self.startTouchYPosition;
 
                 if (typeof self.isScrolling == 'undefined') {
-                    self.isScrolling = !!(self.isScrolling || Math.abs(deltaX) < Math.abs(deltaY));
+                    self.isScrolling = !!(self.isScrolling || Math.abs(self.deltaX) < Math.abs(deltaY));
                 }
                 
                 // move the element 
                 if (!this.isScrolling) {
                     event.preventDefault();
 
-                    self.element.css('left', self.elementPosition + deltaX); // let the element follow the finger
+                    self.element.css('left', self.elementPosition + self.deltaX); // let the element follow the finger
                 }
             } else {
                 self.touchCancel(event);
@@ -105,13 +110,23 @@
             var self = this;
             
             // check to see if more than one finger was used and that there is an ending coordinate
-            if (self.touchesCount == 1 && self.currentXTouchPosition != 0) {
+            if (!this.isScrolling && self.deltaX != 0 && self.touchesCount == 1 && self.currentXTouchPosition != 0) {
                 
                 // snap the element into position
-                var distance = Math.round(self.element.width() * -0.85);
-                self.element.animate({left: distance}, 400, 'easeOutQuint', function(){
+                var distance    = Math.round(self.element.width() * 0.85);
+                var endPosition = 0;
+
+                // End positions are: -85% | 0 | 85%
+                if (self.deltaX < 0 && self.elementPosition >= 0) {
+                    endPosition = self.elementPosition - distance;
+                } else if (self.deltaX > 0 && self.elementPosition <= 0) {
+                    endPosition = self.elementPosition + distance;
+                } else {
+                    endPosition = self.elementPosition;
+                }
+
+                self.element.animate({left: endPosition}, 350, 'easeOutQuint', function(){
                     self.elementPosition = self.element.position().left;
-                    alert('new position: '+self.elementPosition);
                 });              
 
                 self.swipeLength = self.getSwipeLength(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
