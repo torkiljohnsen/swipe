@@ -6,11 +6,3 @@
     height: 200px; 
     background-color: red;
 }
-
-#main.default {
-    left: 0;
-}
-
-#main.swipeLeft {
-    left: -300px;
-}
