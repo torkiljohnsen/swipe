@@ -90,10 +90,11 @@
                     self.isScrolling = !!(self.isScrolling || Math.abs(deltaX) < Math.abs(deltaY));
                 }
                 
-                // move the element
+                // move the element 
                 if (!this.isScrolling) {
                     event.preventDefault();
-                    self.element.css('left', deltaX);
+
+                    self.element.css('left', self.elementPosition + deltaX); // let the element follow the finger
                 }
             } else {
                 self.touchCancel(event);
@@ -105,6 +106,14 @@
             
             // check to see if more than one finger was used and that there is an ending coordinate
             if (self.touchesCount == 1 && self.currentXTouchPosition != 0) {
+                
+                // snap the element into position
+                var distance = Math.round(self.element.width() * -0.85);
+                self.element.animate({left: distance}, 400, 'easeOutQuint', function(){
+                    self.elementPosition = self.element.position().left;
+                    alert('new position: '+self.elementPosition);
+                });              
+
                 self.swipeLength = self.getSwipeLength(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
                 // if the user swiped more than the minimum length, perform the appropriate action
                 if (self.swipeLength >= self.options.minSwipeLength) {
