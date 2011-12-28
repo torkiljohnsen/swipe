@@ -1,27 +1,27 @@
 /**
- * pageSwipe 1.0 - jQuery UI Widget
+ * pageSwipe 1.0
  * https://github.com/torkiljohnsen/swipe
  *
  * Adapted from https://github.com/sgentile/jquery.swipe
+ * Borrowed some ideas from https://github.com/bradbirdsall/Swipe
  *
- * Copyright (c) 2011 Torkil Johnsen (http://twitter.com/torkiljohnsen)
- * Copyright (c) 2011 Steve Gentile (http://twitter.com/stevemgentile)
  * Dual licensed under the MIT and GPL licenses
  */
 
 (function ($) {
     $.widget("ui.swipe", {
         options: {
-            minSwipeLength: 65 // the shortest distance the user may swipe - the lower the number the more sensitive
+            minSwipeLength: 65  // the shortest distance the user may swipe - the lower the number the more sensitive
         },
 
-        touchesCount: 0, //number of finders
-        startTouchXPosition: 0, //initial start location  x
-        startTouchYPosition: 0, //initial start location  x
+        touchesCount: 0,        // number of finders
+        startTouchXPosition: 0, // initial start location  x
+        startTouchYPosition: 0, // initial start location  x
         currentXTouchPosition: 0,
         currentYTouchPosition: 0,
         swipeLength: 0,
         previousPosition: {},
+        isScrolling: undefined,
 
         swiped: function (e, ui) { },
 
