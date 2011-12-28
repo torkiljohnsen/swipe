@@ -1,0 +1,16 @@
+#main {
+    position: absolute; 
+    z-index: 3; 
+    left: 0; 
+    width: 100%; 
+    height: 200px; 
+    background-color: red;
+}
+
+#main.default {
+    left: 0;
+}
+
+#main.swipeLeft {
+    left: -300px;
+}

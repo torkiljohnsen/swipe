@@ -17,6 +17,7 @@
         touchesCount: 0,        // number of finders
         startTouchXPosition: 0, // initial start location  x
         startTouchYPosition: 0, // initial start location  x
+        elementPosition: undefined,
         currentXTouchPosition: 0,
         currentYTouchPosition: 0,
         swipeLength: 0,
@@ -57,10 +58,17 @@
             // since we're looking for a swipe (single finger) and not a gesture (multiple fingers),
             // check that only one finger was used
             if (self.touchesCount == 1) {
+                
+                // get the elements current position
+                if (typeof self.elementPosition == 'undefined') {
+                    self.elementPosition = self.element.position().left;
+                }
+
                 // get the coordinates of the touch
                 self.startTouchXPosition = event.touches[0].pageX;
                 self.startTouchYPosition = event.touches[0].pageY;
                 self.isScrolling = undefined;
+
             } else {
                 // more than one finger touched so cancel
                 self.touchCancel(event);
