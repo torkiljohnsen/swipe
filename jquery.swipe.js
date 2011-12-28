@@ -31,7 +31,7 @@
 
             $touch.bind({
                 "touchstart": function (event) {
-                    //http://stackoverflow.com/questions/671498/jquery-live-removing-iphone-touch-event-attributes
+                    // http://stackoverflow.com/questions/671498/jquery-live-removing-iphone-touch-event-attributes
                     self.touchStart(event.originalEvent);
                 },
                 "touchmove": function (event) {
@@ -60,6 +60,7 @@
                 // get the coordinates of the touch
                 self.startTouchXPosition = event.touches[0].pageX;
                 self.startTouchYPosition = event.touches[0].pageY;
+                self.isScrolling = undefined;
             } else {
                 // more than one finger touched so cancel
                 self.touchCancel(event);
@@ -69,14 +70,22 @@
         touchMove: function (event) {
             var self = this;
             
+            // One finger is swiping
             if (event.touches.length == 1) {
                 self.currentXTouchPosition = event.touches[0].pageX;
                 self.currentYTouchPosition = event.touches[0].pageY;
+
+                var deltaX = self.currentXTouchPosition - self.startTouchXPosition;
                 var deltaY = self.currentYTouchPosition - self.startTouchYPosition;
 
-                if (Math.abs(deltaY) < 15) {
-                    // We're not moving vertically, preventing default
+                if (typeof self.isScrolling == 'undefined') {
+                    self.isScrolling = !!(self.isScrolling || Math.abs(deltaX) < Math.abs(deltaY));
+                }
+                
+                // move the element
+                if (!this.isScrolling) {
                     event.preventDefault();
+                    self.element.css('left', deltaX);
                 }
             } else {
                 self.touchCancel(event);
