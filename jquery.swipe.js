@@ -127,7 +127,7 @@
 
                 self.element.animate({left: endPosition}, 350, 'easeOutQuint', function(){
                     self.elementPosition = self.element.position().left;
-                });              
+                }); 
 
                 self.swipeLength = self.getSwipeLength(self.startTouchXPosition, self.currentXTouchPosition, self.startTouchYPosition, self.currentYTouchPosition);
                 // if the user swiped more than the minimum length, perform the appropriate action
