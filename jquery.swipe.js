@@ -12,13 +12,13 @@
     $.widget("ui.swipe", {
         options: {
             minSwipeLength      : 20, // the shortest distance, in % of the page width, that user must swipe to move the page
-            snapPosition        : 85  // number of % left/right the page should be moved on a successful swipe
+            snapPosition        : 85  // number of % left/right that the page will be moved on a successful swipe. If set to 100%, the page will disappear completely.
         },
 
-        touchesCount            : 0, // number of fingers
+        touchesCount            : 0, // number of fingers that are touching
         startTouchXPosition     : 0, // initial start location  x
         startTouchYPosition     : 0, // initial start location  x
-        deltaX                  : 0,
+        deltaX                  : 0, // horizontal movement
         elementPosition         : undefined,
         currentXTouchPosition   : 0,
         currentYTouchPosition   : 0,
