@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Swipe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="swipe.css" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.pageswipe.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#main').swipeable();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="textDirection">Swipe box:</div>
+        <div id="main"  class="default">1</div>
+        <div id="nav">2</div>
+        <div id="extra">3</div>
+    </div>
+</body>
+</html>
