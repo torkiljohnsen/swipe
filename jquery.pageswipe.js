@@ -13,10 +13,10 @@
     var Swipeable = function(element, options)
     {
         var plugin   = this;
-        var page     = $(element);
+        var page     = $(element); // The main, touch-enabled layer
         var defaults = {
-            minSwipeLength  : 20, // the shortest distance, in % of the page width, that user must swipe to move the page
-            snapPosition    : 85  // number of % left/right that the page will be moved on a successful swipe. If set to 100%, the page will disappear completely.
+            minSwipeLength  : 25,  // the shortest distance, in % of the page width, that user must swipe to move the page
+            snapPosition    : 85   // number of % left/right that the page will be moved on a successful swipe. If set to 100%, the page will disappear completely.
         };
 
         plugin.config = {};
@@ -165,13 +165,11 @@
                     endPosition = state.elementPosition;
                 }
 
-                alert(endPosition);
-
                 // Animate the snap
-                page.animate({left: endPosition}, 350, 'easeOutQuint', function() {
+                page.animate({left:endPosition}, 150, 'swing', function() {
                     // update the state on complete
                     state.elementPosition = endPosition;
-                }); 
+                });
             } else {
                 // we're either scrolling, do not have one finger touching or have no X-axis movement, so cancel
                 self.touchCancel(event);
