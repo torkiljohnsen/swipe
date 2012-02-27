@@ -4,4 +4,4 @@ Functionality: Detects swipes in all four directions, but allows for vertical sc
 
 More changes coming.
 
-see sample.htm, try swiping left and right on the red box. Touch device needed of course.
+Open up sample.htm, try swiping left and right on the red box. Touch device needed of course.
