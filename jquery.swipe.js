@@ -11,7 +11,8 @@
 (function ($) {
     $.widget("ui.swipe", {
         options: {
-            minSwipeLength: 65  // the shortest distance the user may swipe - the lower the number the more sensitive
+            minSwipeLength      : 20, // the shortest distance, in % of the page width, that user must swipe to move the page
+            snapPosition        : 85  // number of % left/right the page should be moved on a successful swipe
         },
 
         touchesCount            : 0, // number of fingers
@@ -131,22 +132,30 @@
         touchEnd: function (event, callback) {
             var self = this;
             
-            // check to see if more than one finger was used and that there is an ending coordinate
+            // Check that we aren't scrolling and that we have X-axis movement done with one finger
             if (!this.isScrolling && self.deltaX != 0 && self.touchesCount == 1 && self.currentXTouchPosition != 0) {
                 
-                // snap the element into position
-                var distance    = Math.round(self.element.width() * 0.85);
-                var endPosition = 0;
+                // should we perform a swipe or snap back to old position?
+                var elementWidth        = self.element.width();
+                var requiredSwipeLength = elementWidth * (self.options.minSwipeLength/100);
+                var distance            = Math.round(elementWidth * self.options.snapPosition/100);
+                var endPosition         = 0;
 
-                // End positions are: -85% | 0 | 85%
-                if (self.deltaX < 0 && self.elementPosition >= 0) {
-                    endPosition = self.elementPosition - distance;
-                } else if (self.deltaX > 0 && self.elementPosition <= 0) {
-                    endPosition = self.elementPosition + distance;
+                if (Math.abs(self.deltaX) > requiredSwipeLength) {
+                    // Snap page into new position
+                    if (self.deltaX < 0 && self.elementPosition >= 0) {
+                        endPosition = self.elementPosition - distance;
+                    } else if (self.deltaX > 0 && self.elementPosition <= 0) {
+                        endPosition = self.elementPosition + distance;
+                    } else {
+                        endPosition = self.elementPosition;
+                    }
                 } else {
+                    // Swipe too short, snap back into old position
                     endPosition = self.elementPosition;
                 }
 
+                // Animate the snap
                 self.element.animate({left: endPosition}, 350, 'easeOutQuint', function(){
                     self.elementPosition = self.element.position().left;
                 }); 
