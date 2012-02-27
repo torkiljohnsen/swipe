@@ -6,3 +6,21 @@
     height: 200px; 
     background-color: red;
 }
+
+#nav {
+    position:absolute; 
+    z-index:2; 
+    left:0; 
+    width: 100%; 
+    height: 300px; 
+    background-color: blue;
+}
+
+#extra {
+    position:absolute; 
+    z-index:1; 
+    left:0; 
+    width: 100%; 
+    height: 400px; 
+    background-color: green;
+}
