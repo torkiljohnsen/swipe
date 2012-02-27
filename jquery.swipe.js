@@ -14,16 +14,16 @@
             minSwipeLength: 65  // the shortest distance the user may swipe - the lower the number the more sensitive
         },
 
-        touchesCount: 0,        // number of finders
-        startTouchXPosition: 0, // initial start location  x
-        startTouchYPosition: 0, // initial start location  x
-        deltaX: 0,
-        elementPosition: undefined,
-        currentXTouchPosition: 0,
-        currentYTouchPosition: 0,
-        swipeLength: 0,
-        previousPosition: {},
-        isScrolling: undefined,
+        touchesCount            : 0, // number of fingers
+        startTouchXPosition     : 0, // initial start location  x
+        startTouchYPosition     : 0, // initial start location  x
+        deltaX                  : 0,
+        elementPosition         : undefined,
+        currentXTouchPosition   : 0,
+        currentYTouchPosition   : 0,
+        swipeLength             : 0,
+        previousPosition        : {},
+        isScrolling             : undefined,
 
         swiped: function (e, ui) { },
 
@@ -49,6 +49,28 @@
                     });
                 }
             });
+
+            // Windows 8 touch support
+            if (window.navigator.msPointerEnabled) {
+                $touch.on({
+                    "MSPointerDown": function (event) {
+                        self.touchStart(event.originalEvent);
+                    },
+                    "MSPointerMove": function (event) {
+                        self.touchMove(event.originalEvent);
+
+                    },
+                    "MSPointerOut": function (event) {
+                        self.touchCancel(event.originalEvent);
+                       
+                    },
+                    "MSPointerUp": function (event) {
+                        self.touchEnd(event.originalEvent, function (swipe) {
+                            self._trigger("swiped", event, { swipeDirection: swipe });
+                        });
+                    }
+                });
+            }
         },
 
         touchStart: function (event) {
