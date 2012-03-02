@@ -2,6 +2,7 @@
  * pageSwipe 1.1
  * https://github.com/torkiljohnsen/swipe
  *
+ * Kudos-time:
  * Adapted from https://github.com/sgentile/jquery.swipe
  * Borrowed some ideas from https://github.com/bradbirdsall/Swipe
  * Modelled after http://www.virgentech.com/blog/2009/10/building-object-oriented-jquery-plugin.html
