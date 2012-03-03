@@ -1,7 +1,8 @@
 /**
- * pageSwipe 1.1
+ * swipeable 1.1
  * https://github.com/torkiljohnsen/swipe
  *
+ * Kudos-time:
  * Adapted from https://github.com/sgentile/jquery.swipe
  * Borrowed some ideas from https://github.com/bradbirdsall/Swipe
  * Modelled after http://www.virgentech.com/blog/2009/10/building-object-oriented-jquery-plugin.html
@@ -12,11 +13,18 @@
 (function($){
     var Swipeable = function(element, options)
     {
-        var plugin   = this;
-        var page     = $(element); // The main, touch-enabled layer
+        var plugin      = this;
+        var page        = $(element);               // The main, touch-enabled layer
+        var rightButton = undefined;
+        var leftButton  = undefined;
+
         var defaults = {
-            minSwipeLength  : 25,  // the shortest distance, in % of the page width, that user must swipe to move the page
-            snapPosition    : 85   // number of % left/right that the page will be moved on a successful swipe. If set to 100%, the page will disappear completely.
+            animationSpeed      : 150,           // speed of the transition
+            easing              : 'swing',       // easing function. jQuery only supports 'linear' and 'swing'. Need to use jQuery UI to get others.
+            minSwipeLength      : 20,            // the shortest distance, in % of the page width, that user must swipe to move the page
+            snapPosition        : 85,            // number of % left/right that the page will be moved on a successful swipe. If set to 100%, the page will disappear completely.
+            slideRightSelector  : '#slideRight', // button selector
+            slideLeftSelector   : '#slideLeft'   // button selector
         };
 
         plugin.config = {};
@@ -28,17 +36,20 @@
                 startTouchXPosition     : 0,         // initial start location  x
                 startTouchYPosition     : 0,         // initial start location  x
                 deltaX                  : 0,         // horizontal movement
-                elementPosition         : undefined,
+                elementPosition         : undefined, // element position before the swipe
                 currentXTouchPosition   : 0,
                 currentYTouchPosition   : 0,
                 swipeLength             : 0,
-                previousPosition        : {},
                 isScrolling             : undefined
             };
+
+            rightButton = $(plugin.config.slideRightSelector);
+            leftButton  = $(plugin.config.slideLeftSelector);
+
             attach();
         };
 
-        var attach = function () {
+        var attach = function() {
 
             // attach handlers to events
             page.on({
@@ -77,6 +88,27 @@
                     }
                 });
             }
+
+            // Click events for the buttons
+            rightButton.on({
+                "click": function(event) {
+                    if (rightButton.hasClass('open')) {
+                        resetPage();
+                    } else {
+                        movePageRight();
+                    }
+                }
+            });
+
+            leftButton.on({
+                "click": function(event) {
+                    if (leftButton.hasClass('open')) {
+                        resetPage();
+                    } else {
+                        movePageLeft();
+                    }
+                }
+            });
         };
 
         var touchStart = function(event) {
@@ -146,33 +178,28 @@
             if (!state.isScrolling && state.deltaX != 0 && state.touchesCount == 1 && state.currentXTouchPosition != 0) {
                 
                 // should we perform a swipe or snap back to old position?
-                var elementWidth        = page.width();
-                var requiredSwipeLength = elementWidth * (plugin.config.minSwipeLength/100);            // swipe length required to move the page
-                var distance            = Math.round(elementWidth * plugin.config.snapPosition/100);    // distance to snap position
-                var endPosition         = 0;
+                var elementWidth        = page.width(); 
+                var requiredSwipeLength = elementWidth * (plugin.config.minSwipeLength/100); // swipe length required to move the page
 
                 if (Math.abs(state.deltaX) > requiredSwipeLength) {
                     // Snap page into new position
-                    if (state.deltaX < 0 && state.elementPosition >= 0) {
-                        endPosition = state.elementPosition - distance;
-                    } else if (state.deltaX > 0 && state.elementPosition <= 0) {
-                        endPosition = state.elementPosition + distance;
+                    if (state.elementPosition == 0) {
+                        if (state.deltaX > 0) {
+                            movePageRight();
+                        } else {
+                            movePageLeft();
+                        }
                     } else {
-                        endPosition = state.elementPosition;
+                        resetPage();
                     }
                 } else {
-                    // Swipe too short, snap back into old position
-                    endPosition = state.elementPosition;
+                    // Swipe too short, snap back to start position
+                    snapToPosition(state.elementPosition);
                 }
 
-                // Animate the snap
-                page.animate({left:endPosition}, 150, 'swing', function() {
-                    // update the state on complete
-                    state.elementPosition = endPosition;
-                });
             } else {
-                // we're either scrolling, do not have one finger touching or have no X-axis movement, so cancel
-                self.touchCancel(event);
+                // we're either scrolling, do not have just one finger touching or have no X-axis movement, so cancel
+                touchCancel(event);
             }
         };
 
@@ -183,6 +210,42 @@
                 startTouchYPosition     : 0, // initial start location  x
                 currentXTouchPosition   : 0,
                 currentYTouchPosition   : 0
+            });
+        };
+
+        // Calculate distance to snap position
+        var distance = function() {
+            return Math.round(page.width() * plugin.config.snapPosition/100);
+        };
+
+        // Swipe right reveals layer 2
+        var movePageRight = function() {
+            snapToPosition(distance());
+            rightButton.addClass('open');
+        };
+
+        // Swipe left reveals layer 3
+        var movePageLeft = function() {
+            snapToPosition(-distance());
+            leftButton.addClass('open');
+        };
+
+        // Normalize the layout
+        var resetPage = function() {
+            snapToPosition(0);
+
+            if (leftButton.hasClass('open')) {
+                leftButton.removeClass('open');
+            } else {
+                rightButton.removeClass('open');
+            }
+        };
+
+        var snapToPosition = function(endPosition) {
+            // Animate the snap
+            page.animate({left:endPosition}, plugin.config.animationSpeed, plugin.config.easing, function() {
+                // update the state on complete
+                plugin.state.elementPosition = endPosition;
             });
         };
 
