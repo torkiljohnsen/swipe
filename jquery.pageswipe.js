@@ -214,7 +214,7 @@
         };
 
         var touchCancel = function(event) {
-            plugin.state = $extend(plugin.state, {
+            plugin.state = $.extend(plugin.state, {
                 touchesCount            : 0, // number of fingers that are touching
                 startTouchXPosition     : 0, // initial start location  x
                 startTouchYPosition     : 0, // initial start location  x
