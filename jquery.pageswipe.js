@@ -41,7 +41,6 @@
                 elementPosition         : undefined, // element position before the swipe
                 currentXTouchPosition   : 0,
                 currentYTouchPosition   : 0,
-                swipeLength             : 0,
                 isScrolling             : undefined
             };
 
