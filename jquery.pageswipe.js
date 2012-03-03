@@ -17,6 +17,7 @@
         var page        = $(element);               // The main, touch-enabled layer
         var rightButton = undefined;
         var leftButton  = undefined;
+        var secondLayer = undefined;
 
         var defaults = {
             animationSpeed      : 150,           // speed of the transition
@@ -24,7 +25,8 @@
             minSwipeLength      : 20,            // the shortest distance, in % of the page width, that user must swipe to move the page
             snapPosition        : 85,            // number of % left/right that the page will be moved on a successful swipe. If set to 100%, the page will disappear completely.
             slideRightSelector  : '#slideRight', // button selector
-            slideLeftSelector   : '#slideLeft'   // button selector
+            slideLeftSelector   : '#slideLeft',  // button selector
+            secondLayerSelector : '#nav'         // selector of the second layer, which moves on left swipes
         };
 
         plugin.config = {};
@@ -45,6 +47,7 @@
 
             rightButton = $(plugin.config.slideRightSelector);
             leftButton  = $(plugin.config.slideLeftSelector);
+            secondLayer = $(plugin.config.secondLayerSelector); 
 
             attach();
         };
@@ -143,7 +146,8 @@
 
         var touchMove = function(event) {
             
-            var state = plugin.state;
+            var state   = plugin.state;
+            var pagePos = 0;
 
             // One finger is swiping
             if (state.touchesCount == 1) {
@@ -162,7 +166,14 @@
                 if (!state.isScrolling) {
                     event.preventDefault();
 
-                    page.css('left', state.elementPosition + state.deltaX); // let the element follow the finger
+                    pagePos = state.elementPosition + state.deltaX;
+
+                    page.css('left', pagePos); // let the element follow the finger
+                    
+                    // Move second layer too when we go past the Y axis
+                    if (pagePos < 0) {
+                        secondLayer.css('left', pagePos);
+                    }
                 }
             } else {
                 // not one finger touching, so cancel
@@ -220,30 +231,33 @@
 
         // Swipe right reveals layer 2
         var movePageRight = function() {
-            snapToPosition(distance());
+            snapToPosition(page, distance());
             rightButton.addClass('open');
         };
 
         // Swipe left reveals layer 3
         var movePageLeft = function() {
-            snapToPosition(-distance());
+            var distance = -distance();
+            snapToPosition(page, distance);
+            snapToPosition(secondLayer, distance);
             leftButton.addClass('open');
         };
 
         // Normalize the layout
         var resetPage = function() {
-            snapToPosition(0);
+            snapToPosition(page, 0);
 
             if (leftButton.hasClass('open')) {
+                snapToPosition(secondLayer, 0);
                 leftButton.removeClass('open');
             } else {
                 rightButton.removeClass('open');
             }
         };
 
-        var snapToPosition = function(endPosition) {
+        var snapToPosition = function(layer, endPosition) {
             // Animate the snap
-            page.animate({left:endPosition}, plugin.config.animationSpeed, plugin.config.easing, function() {
+            layer.animate({left:endPosition}, plugin.config.animationSpeed, plugin.config.easing, function() {
                 // update the state on complete
                 plugin.state.elementPosition = endPosition;
             });
