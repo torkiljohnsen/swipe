@@ -166,13 +166,15 @@
                     event.preventDefault();
 
                     pagePos = state.elementPosition + state.deltaX;
-
-                    page.css('left', pagePos); // let the element follow the finger
                     
-                    // Move second layer too when we go past the Y axis
+                    // Move second layer left with the finger when we go past the Y axis
                     if (pagePos < 0) {
                         secondLayer.css('left', pagePos);
                     }
+
+                    // let the page follow the finger
+                    page.css('left', pagePos); 
+                    
                 }
             } else {
                 // not one finger touching, so cancel
@@ -236,9 +238,9 @@
 
         // Swipe left reveals layer 3
         var movePageLeft = function() {
-            var distance = -distance();
-            snapToPosition(page, distance);
-            snapToPosition(secondLayer, distance);
+            var dist = -distance();
+            snapToPosition(secondLayer, dist);
+            snapToPosition(page, dist);
             leftButton.addClass('open');
         };
 
