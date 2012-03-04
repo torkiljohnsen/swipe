@@ -47,6 +47,7 @@
             rightButton = $(plugin.config.slideRightSelector);
             leftButton  = $(plugin.config.slideLeftSelector);
             secondLayer = $(plugin.config.secondLayerSelector); 
+            wrapper     = page.parent();
 
             attach();
         };
