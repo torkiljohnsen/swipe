@@ -14,8 +14,8 @@
     z-index: 4; 
     left: 0; 
     width: 100%; 
-    height: 200px; 
-    background-color: red;
+    height: 110px; 
+    background-color: #eee;
 }
 
 #nav {
@@ -23,8 +23,8 @@
     z-index:3; 
     left:0; 
     width: 100%; 
-    height: 300px; 
-    background-color: blue;
+    height: 220px; 
+    background-color: #ddd;
 }
 
 #extra {
@@ -32,16 +32,18 @@
     z-index:2; 
     left:0; 
     width: 100%; 
-    height: 400px; 
-    background-color: green;
+    height: 330px; 
+    background-color: #ccc;
 }
 
 #slideLeft {
+    width: 15%;
     position: absolute;
     right: 0;
 }
 
 #slideRight {
+    width: 15%;
     position: absolute;
     left: 0;
 }
@@ -57,4 +59,12 @@
 
 #extra .padding {
     float: right;
+}
+
+.leftSwipe #slideLeft:before {
+    content: "Close: ";
+}
+
+.rightSwipe #slideRight:before {
+    content: "Close: ";
 }
