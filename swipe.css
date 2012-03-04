@@ -22,13 +22,20 @@ body {
     background-color: #eee;
 }
 
+#main div {
+    width: 70%;
+    margin: 0 15%;
+    text-align: center;
+    padding-top: 40px;
+}
+
 #nav {
     position:absolute; 
     z-index:3; 
     left:0; 
     width: 100%; 
     height: 220px; 
-    background-color: #ddd;
+    background-color: #ccc;
 }
 
 #extra {
@@ -37,7 +44,7 @@ body {
     left:0; 
     width: 100%; 
     height: 330px; 
-    background-color: #ccc;
+    background-color: #aaa;
 }
 
 #slideLeft,
