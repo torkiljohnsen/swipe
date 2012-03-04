@@ -1,3 +1,7 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 #wrapper { 
     position:absolute;
     z-index: 1;
@@ -36,14 +40,24 @@
     background-color: #ccc;
 }
 
-#slideLeft {
+#slideLeft,
+#slideRight {
+    font-size: 10px;
+    color: #fff;
+    background-color: #555;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 44px;
     width: 15%;
+}
+
+#slideLeft {
     position: absolute;
     right: 0;
 }
 
 #slideRight {
-    width: 15%;
     position: absolute;
     left: 0;
 }
@@ -59,12 +73,4 @@
 
 #extra .padding {
     float: right;
-}
-
-.leftSwipe #slideLeft:before {
-    content: "Close: ";
-}
-
-.rightSwipe #slideRight:before {
-    content: "Close: ";
 }
