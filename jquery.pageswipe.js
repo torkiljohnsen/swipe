@@ -14,10 +14,11 @@
     var Swipeable = function(element, options)
     {
         var plugin      = this;
-        var page        = $(element);               // The main, touch-enabled layer
+        var page        = $(element); // The main, touch-enabled layer
         var rightButton = undefined;
         var leftButton  = undefined;
         var secondLayer = undefined;
+        var wrapper     = undefined;
 
         var defaults = {
             animationSpeed      : 150,           // speed of the transition
