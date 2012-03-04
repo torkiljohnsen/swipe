@@ -95,20 +95,20 @@
             // Click events for the buttons
             rightButton.on({
                 "click": function(event) {
-                    if (rightButton.hasClass('open')) {
-                        resetPage();
+                    if (wrapper.hasClass('rightSwipe')) {
+                        movePage('center');
                     } else {
-                        movePageRight();
+                        movePage('right');
                     }
                 }
             });
 
             leftButton.on({
                 "click": function(event) {
-                    if (leftButton.hasClass('open')) {
-                        resetPage();
+                    if (wrapper.hasClass('leftSwipe')) {
+                        movePage('center');
                     } else {
-                        movePageLeft();
+                        movePage('left');
                     }
                 }
             });
@@ -198,16 +198,22 @@
                     // Snap page into new position
                     if (state.elementPosition == 0) {
                         if (state.deltaX > 0) {
-                            movePageRight();
+                            movePage('right');
                         } else {
-                            movePageLeft();
+                            movePage('left');
                         }
                     } else {
-                        resetPage();
+                        movePage('center');
                     }
                 } else {
                     // Swipe too short, snap back to start position
-                    snapToPosition(state.elementPosition);
+                    if (state.elementPosition < 0) {
+                        movePage('left');
+                    } else if (state.elementPosition > 0) {
+                        movePage('right');
+                    } else {
+                        movePage('center');
+                    }
                 }
 
             } else {
@@ -226,35 +232,38 @@
             });
         };
 
-        // Calculate distance to snap position
-        var distance = function() {
+        // Calculate distance to snap position. Calculate this each time, because page width can change.
+        var getDistance = function() {
             return Math.round(page.width() * plugin.config.snapPosition/100);
         };
 
-        // Swipe right reveals layer 2
-        var movePageRight = function() {
-            snapToPosition(page, distance());
-            rightButton.addClass('open');
-        };
-
-        // Swipe left reveals layer 3
-        var movePageLeft = function() {
-            var dist = -distance();
-            snapToPosition(secondLayer, dist);
-            snapToPosition(page, dist);
-            leftButton.addClass('open');
-        };
-
-        // Normalize the layout
-        var resetPage = function() {
-            snapToPosition(page, 0);
-
-            if (leftButton.hasClass('open')) {
-                snapToPosition(secondLayer, 0);
-                leftButton.removeClass('open');
-            } else {
-                rightButton.removeClass('open');
+        var movePage = function(direction) {
+            
+            // Calculate endposition
+            direction = typeof direction === 'undefined' ? 'center' : direction;
+            var endPosition = 0;
+            if (direction != 'center') {
+                endPosition = getDistance();
+                if (direction == 'left') {
+                    endPosition *= -1;
+                }
             }
+
+            // If going left or coming from the left, secondlayer needs to move too
+            if (direction == 'left') {
+                snapToPosition(secondLayer, endPosition);
+            }
+
+            // Move the main layer
+            snapToPosition(page, endPosition);
+
+            // If resetting, reset the second layer too
+            if (direction == 'center') {
+                snapToPosition(secondLayer, endPosition);
+            }
+
+            // Set classes
+            wrapper.removeClass('leftSwipe centerSwipe rightSwipe').addClass(direction+'Swipe');
         };
 
         var snapToPosition = function(layer, endPosition) {
