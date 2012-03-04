@@ -1,10 +1,10 @@
 # Swipeable jQuery plugin
 
-An attempt at an implementation the mobile navigation pattern that can be seen in for instance the [Path app](https://path.com/). 
+An attempt at an implementation the mobile navigation pattern that can be seen in for instance the [Path app](https://path.com/), but with fallbacks for non-touch and non-JS devices. 
 
 ## Background
 
-On smaller devices, screen real estate is hard to come by. Navigation often gets in the way of content. With Swipeable, I'm trying to move the navigation out of the way, while still letting it be easily accessible. I'm doing this by implementing the navigation pattern that is progressively enhanced:
+On smaller devices, screen real estate is hard to come by. Navigation often gets in the way of content. With Swipeable, I'm trying to move the navigation out of the way, while still letting it be easily accessible. I'm doing this by implementing a navigation that's progressively enhanced:
 
 1. Navigation should be placed at the bottom of the page, and a button with an anchor link in the top of the page should take you to this menu.
 2. If javascript support is detected, the navigation layer should be placed on a lower z-index, and put to the left of the main content, while the "extra" layer (contact info for instance), should be put to the right and on an even lower z-index. This will allow you to click the "MENU" button to slide the main content right to reveal the main menu, and click the button "CONTACT" to slide the content and menu to the left to reveal the contact info layer.
