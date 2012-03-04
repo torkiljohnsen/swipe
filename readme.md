@@ -1,6 +1,6 @@
 # Swipeable jQuery plugin
 
-An attempt at an implementation the mobile navigation pattern that can be seen in for instance the [Path app](https://path.com/), but with fallbacks for non-touch and non-JS devices. 
+An attempt at an implementation the mobile navigation pattern that can be seen in for instance the [Path app](https://path.com/). Swipeable is for use on responsive websites, so unlike a native app it has (or rather, will have) fallbacks for non-touch and non-JS devices. 
 
 ## Background
 
