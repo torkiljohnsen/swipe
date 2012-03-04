@@ -35,3 +35,26 @@
     height: 400px; 
     background-color: green;
 }
+
+#slideLeft {
+    position: absolute;
+    right: 0;
+}
+
+#slideRight {
+    position: absolute;
+    left: 0;
+}
+
+.padding {
+    width: 80%;
+    border: 1px solid white;
+}
+
+#nav .padding {
+    float: left;
+}
+
+#extra .padding {
+    float: right;
+}
