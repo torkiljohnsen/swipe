@@ -1,6 +1,6 @@
 # Swipeable jQuery plugin
 
-An attempt at an implementation the mobile navigation pattern that can be seen in for instance the Path app for iPhone. 
+An attempt at an implementation the mobile navigation pattern that can be seen in for instance the [Path app](https://path.com/). 
 
 ## Background
 
