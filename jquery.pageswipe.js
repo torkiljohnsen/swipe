@@ -127,8 +127,8 @@
             if (state.touchesCount == 1) {
                 
                 // reset some pr swipe variables
-                state.isScrolling = undefined;
-                state.deltaX      = 0;
+                state.isScrolling         = undefined;
+                state.deltaX              = 0;
                 state.startTouchXPosition = event.touches[0].pageX;
                 state.startTouchYPosition = event.touches[0].pageY;
 
