@@ -18,6 +18,7 @@
         var rightButton = undefined;
         var leftButton  = undefined;
         var secondLayer = undefined;
+        var thirdLayer  = undefined;
         var wrapper     = undefined;
 
         var defaults = {
@@ -27,7 +28,8 @@
             snapPosition        : 85,            // number of % left/right that the page will be moved on a successful swipe. If set to 100%, the page will disappear completely.
             slideRightSelector  : '#slideRight', // button selector
             slideLeftSelector   : '#slideLeft',  // button selector
-            secondLayerSelector : '#nav'         // selector of the second layer, which moves on left swipes
+            secondLayerSelector : '#nav',        // selector of the second layer, which moves on left swipes
+            thirdLayerSelector  : '#extra'       // selector for the third layer, which is revealed on left swipes
         };
 
         plugin.config = {};
@@ -48,6 +50,7 @@
             rightButton = $(plugin.config.slideRightSelector);
             leftButton  = $(plugin.config.slideLeftSelector);
             secondLayer = $(plugin.config.secondLayerSelector); 
+            thirdLayer  = $(plugin.config.thirdLayerSelector);
             wrapper     = page.parent();
 
             attach();
