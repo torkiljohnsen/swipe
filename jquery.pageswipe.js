@@ -60,17 +60,17 @@
 
             // attach handlers to events
             page.on({
-                "touchstart": function(event) {
+                'touchstart': function(event) {
                     // http://stackoverflow.com/questions/671498/jquery-live-removing-iphone-touch-event-attributes
                     touchStart(event.originalEvent);
                 },
-                "touchmove": function(event) {
+                'touchmove': function(event) {
                     touchMove(event.originalEvent);
                 },
-                "touchcancel": function(event) {
+                'touchcancel': function(event) {
                     touchCancel(event.originalEvent);
                 },
-                "touchend": function(event) {
+                'touchend': function(event) {
                     touchEnd(event.originalEvent);
                 }
             });
@@ -78,19 +78,19 @@
             // Windows 8 touch support
             if (window.navigator.msPointerEnabled) {
                 page.on({
-                    "MSPointerCancel": function(event) {
+                    'MSPointerCancel': function(event) {
                         touchCancel(event.originalEvent);
                     },
-                    "MSPointerDown": function(event) {
+                    'MSPointerDown': function(event) {
                         touchStart(event.originalEvent);
                     },
-                    "MSPointerMove": function(event) {
+                    'MSPointerMove': function(event) {
                         touchMove(event.originalEvent);
                     },
-                    "MSPointerOut": function(event) {
+                    'MSPointerOut': function(event) {
                         touchCancel(event.originalEvent);
                     },
-                    "MSPointerUp": function(event) {
+                    'MSPointerUp': function(event) {
                         touchEnd(event.originalEvent);
                     }
                 });
@@ -98,7 +98,7 @@
 
             // Click events for the buttons
             rightButton.on({
-                "click": function(event) {
+                'click': function(event) {
                     if (wrapper.hasClass('rightSwipe')) {
                         movePage('center');
                     } else {
@@ -108,7 +108,7 @@
             });
 
             leftButton.on({
-                "click": function(event) {
+                'click': function(event) {
                     if (wrapper.hasClass('leftSwipe')) {
                         movePage('center');
                     } else {
