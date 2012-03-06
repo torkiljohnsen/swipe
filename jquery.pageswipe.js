@@ -174,7 +174,6 @@
 
                     // let the page follow the finger
                     page.css('left', pagePos); 
-                    
                 }
             } else {
                 // not one finger touching, so cancel
@@ -216,24 +215,45 @@
                 }
 
             } else {
-                // we're either scrolling, do not have just one finger touching or have no X-axis movement, so cancel
                 touchCancel(event);
             }
+
         };
 
         var touchCancel = function(event) {
-            plugin.state = $.extend(plugin.state, {
-                touchesCount            : 0, // number of fingers that are touching
-                startTouchXPosition     : 0, // initial start location  x
-                startTouchYPosition     : 0, // initial start location  x
+
+            state = plugin.state;
+
+            if (state.elementPosition != state.currentXTouchPosition) {
+                revertSwipe();
+            }
+
+            state = $.extend(state, {
                 currentXTouchPosition   : 0,
                 currentYTouchPosition   : 0
             });
+
         };
 
         // Calculate distance to snap position. Calculate this each time, because page width can change.
         var getDistance = function() {
             return Math.round(page.width() * plugin.config.snapPosition/100);
+        };
+
+        // revert a swipe, for instance if suddenly a second finger is touching
+        var revertSwipe = function(startPos) {
+            
+            var state = plugin.state;
+
+            if (state.elementPosition == 0) {
+                returnTo = 'center';
+            } else if (state.elementPosition < 0) {
+                returnTo = 'left';
+            } else if (state.elementPosition > 0) {
+                returnTo = 'right';
+            }
+
+            movePage(returnTo); 
         };
 
         var movePage = function(direction) {
