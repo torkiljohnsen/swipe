@@ -174,6 +174,11 @@
 
                     // let the page follow the finger
                     page.css('left', pagePos); 
+                } else {
+                    if (state.elementPosition != 0) {
+                        // prevent normal scrolling when not viewing the main layer
+                        event.preventDefault();
+                    }
                 }
             } else {
                 // not one finger touching, so cancel
