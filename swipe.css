@@ -12,7 +12,7 @@ body {
     overflow-y: auto; 
 }
 
-#main {
+#content {
     position: absolute; 
     z-index: 4; 
     left: 0; 
@@ -20,7 +20,7 @@ body {
     background-color: #eee;
 }
 
-#main div {
+#content div {
     width: 70%;
     margin: 0 15%;
     text-align: left;
