@@ -28,7 +28,7 @@ body {
 }
 
 #nav {
-    position:absolute; 
+    position:fixed; 
     z-index:3; 
     left:0; 
     width: 100%; 
@@ -37,7 +37,7 @@ body {
 }
 
 #extra {
-    position:absolute; 
+    position:fixed; 
     z-index:2; 
     left:0; 
     width: 100%; 
