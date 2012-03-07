@@ -52,6 +52,7 @@
             secondLayer = $(plugin.config.secondLayerSelector); 
             thirdLayer  = $(plugin.config.thirdLayerSelector);
             wrapper     = page.parent();
+            wrapper.height(page.height());
 
             attach();
         };
