@@ -252,13 +252,14 @@
         // revert a swipe, for instance if suddenly a second finger is touching
         var revertSwipe = function(startPos) {
             
-            var state = plugin.state;
+            var state    = plugin.state;
+            var returnTo = undefined;
 
             if (state.elementPosition == 0) {
                 returnTo = 'center';
             } else if (state.elementPosition < 0) {
                 returnTo = 'left';
-            } else if (state.elementPosition > 0) {
+            } else {
                 returnTo = 'right';
             }
 
@@ -296,7 +297,7 @@
 
         var snapToPosition = function(layer, endPosition) {
             // Animate the snap
-            layer.animate({left:endPosition}, plugin.config.animationSpeed, plugin.config.easing, function() {
+            return layer.animate({left:endPosition}, plugin.config.animationSpeed, plugin.config.easing, function() {
                 // update the state on complete
                 plugin.state.elementPosition = endPosition;
             });
