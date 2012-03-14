@@ -21,6 +21,4 @@ If the device supports touch, then touch support is added so that revealing the 
 
 ## Testdrive
 
-Open up **pageswipe.htm** on your localhost, and try swiping left and right, or clicking the buttons at the top. The page currently works best when viewed on a small screen, like an iPhone.
-
-I have tested this on an iPhone and a Samsung Galaxy Note so far, so if you have experiences from other devices I'd be very interested in hearing them. Bear in mind, these are *very* early stages of development still :)
+[Check out the demo](http://www.torkiljohnsen.com/demo/layered-mobile-nav/) (use a small touchscreen, this is not responsive just yet)
