@@ -10,11 +10,11 @@ On smaller devices, screen real estate is hard to come by. Navigation often gets
 
 When no touch or Javascript support is available, navigation should follow the [footer anchor pattern](http://bradfrostweb.com/blog/web/responsive-nav-patterns/#footer-anchor). This means that the navigation is placed in the bottom of the page, and that a button in the top of the page with an achor link, will take you to the navigation.
 
-### 2. With Javascript
+### 2. Enhance 1: With Javascript
 
 If javascript support is detected, the navigation layer should be placed on a lower z-index than the main content, and placed below it, while the "extra" layer (contact info for instance), should be put on an even lower z-index and underneath as well. This will allow you to click the "MENU" button to slide the main content right to reveal the main menu, and click the button "CONTACT" to slide the content and menu to the left to reveal the contact info layer.
 
-### 3. Weth touch
+### 3. Enhance 2: With touch
 
 If the device supports touch, then touch support is added so that revealing the menu or the contact info can be done by swiping right and left.
 
