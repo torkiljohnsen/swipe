@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Swipe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="swipe.css" type="text/css" />
+    <script type="text/javascript" src="http://zeptojs.com/zepto.min.js"></script>
+    <script type="text/javascript" src="zepto.pageswipe.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#content').swipeable();
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="content" class="default">
+            <a href="#nav" id="slideRight">NAV</a>
+            <a href="#extra" id="slideLeft">EXTRA</a>
+
+            <div><p>Swipe on this layer</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus molestie massa, at aliquet nulla rutrum at. Curabitur venenatis mattis lacus, vitae euismod lacus mattis ac. Nullam sed ante nunc. Proin felis elit, sollicitudin vel vestibulum quis, ultricies id lectus. Mauris enim magna, sodales eget vulputate eu, porta eu augue. Etiam bibendum imperdiet interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim consectetur libero, vitae molestie nisl venenatis eu. Mauris risus tellus, porta ut tempor sit amet, fermentum in neque. Vestibulum egestas nibh at leo elementum et laoreet turpis lobortis. In sed augue turpis, sit amet feugiat leo.</p>
+
+                <p>Nam in dignissim nibh. Ut eleifend arcu arcu, sit amet tempus urna. In placerat felis ac justo volutpat et euismod mi accumsan. Mauris et est arcu. Pellentesque sit amet nibh nunc. Vivamus ultricies, turpis a aliquam hendrerit, augue risus placerat nunc, vitae elementum enim mi nec lorem. In dapibus placerat consequat. Aliquam fringilla dolor eget lectus dapibus iaculis. Mauris sollicitudin fermentum blandit. Integer eu tincidunt odio.</p>
+
+                <p>Praesent interdum pulvinar massa non condimentum. Aenean purus sapien, vehicula id faucibus quis, interdum nec lorem. Sed placerat lacinia libero eget aliquam. Pellentesque malesuada cursus risus quis faucibus. Nulla bibendum consequat tellus eu feugiat. Suspendisse vel urna eu arcu aliquet consectetur. Praesent placerat mollis dui nec vulputate. Quisque sed felis et mauris dignissim interdum. Donec nec sem tellus, non dapibus lectus. Aliquam sapien nisl, dapibus et consectetur sed, interdum nec dui.</p>
+
+                <p>Maecenas pulvinar luctus odio, vel adipiscing mi commodo sit amet. Fusce eu magna sapien, eget fermentum risus. Fusce fringilla risus sit amet massa semper scelerisque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla vulputate cursus ante, sit amet vulputate elit varius eu. Curabitur tincidunt commodo commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec blandit mollis nibh consequat accumsan. Pellentesque vitae molestie arcu. Pellentesque sed nisi nec tortor pulvinar aliquet id nec tortor. Aenean nulla augue, vestibulum ornare hendrerit sit amet, fermentum id arcu. Duis augue urna, porta sit amet malesuada sed, hendrerit vitae orci. Nulla ullamcorper ligula sed neque rhoncus at convallis neque vestibulum.</p>
+
+                <p>Aliquam sollicitudin purus et dui vulputate sodales. Integer iaculis, elit ut aliquet venenatis, velit ipsum consectetur nunc, quis rhoncus est purus sit amet sapien. Etiam id cursus arcu. Mauris sit amet mauris diam, non luctus metus. Suspendisse convallis, libero sed accumsan iaculis, risus enim euismod diam, nec viverra nulla orci a nibh. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce placerat mi consectetur mi sollicitudin quis vehicula sem commodo. Pellentesque justo ipsum, auctor vel vehicula at, mattis vel diam. Curabitur hendrerit rutrum luctus. Proin gravida augue eget risus sollicitudin vitae posuere neque tempor. Ut ornare est quis mauris luctus commodo. Vivamus rutrum congue cursus. Maecenas dictum ante in elit tempus sit amet sollicitudin massa egestas. Ut tellus arcu, aliquam posuere consequat in, luctus non lacus. In pretium vehicula mauris nec facilisis.</p>
+
+            </div>
+        </div>
+        <div id="nav" name="nav">
+            <div class="padding">Navigation show up here</div>
+        </div>
+        <div id="extra" name="extra">
+            <div class="padding">
+                Extra stuff shows up here
+            </div>
+        </div>
+    </div>
+</body>
+</html>
