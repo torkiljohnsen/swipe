@@ -1,4 +1,4 @@
-# Swipeable jQuery plugin
+# Port of Swipeable jQuery plugin to Zepto
 
 An attempt at an implementation the **layered approach mobile navigation pattern** that can be seen in for instance the [Path app](https://path.com/). Swipeable is for use on responsive websites, so unlike a native app it has (or rather, will have) fallbacks for non-touch and non-JS devices. 
 
@@ -21,4 +21,5 @@ If the device supports touch, then touch support is added so that revealing the 
 
 ## Testdrive
 
-[Check out the demo](http://www.torkiljohnsen.com/demo/layered-mobile-nav/) (use a small touchscreen, this is not responsive just yet)
+[Check out the JQuery demo](http://www.torkiljohnsen.com/demo/layered-mobile-nav/) (use a small touchscreen, this is not responsive just yet)
+[Check out the Zepto demo](http://gregs.tcias.co.uk/wp-content/uploads/2012/04/zepto.pageswipe.htm) (use a small touchscreen, this is not responsive just yet)
