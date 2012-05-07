@@ -1,25 +1,28 @@
 /**
- * swipeable 1.1
- * https://github.com/torkiljohnsen/swipe
+ * swipeable 1.2 (https://github.com/gregstewart/swipe)
+ * Forked from https://github.com/torkiljohnsen/swipe
  *
  * Kudos-time:
  * Adapted from https://github.com/sgentile/jquery.swipe
  * Borrowed some ideas from https://github.com/bradbirdsall/Swipe
  * Modelled after http://www.virgentech.com/blog/2009/10/building-object-oriented-jquery-plugin.html
- *
+ * Zepto port: depends on http://blog.pamelafox.org/2011/11/porting-from-jquery-to-zepto.html
+ *  also changed:   event passthrough
  * Dual licensed under the MIT and GPL licenses
  */
+
+var jQuery = jQuery || Zepto;
 
 (function($){
     var Swipeable = function(element, options)
     {
-        var plugin      = this;
-        var page        = $(element); // The main, touch-enabled layer
-        var rightButton = undefined;
-        var leftButton  = undefined;
-        var secondLayer = undefined;
-        var thirdLayer  = undefined;
-        var wrapper     = undefined;
+        var plugin      = this,
+            page        = $(element), // The main, touch-enabled layer
+            rightButton,
+            leftButton,
+            secondLayer,
+            thirdLayer,
+            wrapper;
 
         var defaults = {
             animationSpeed      : 150,           // speed of the transition
@@ -49,7 +52,7 @@
 
             rightButton = $(plugin.config.slideRightSelector);
             leftButton  = $(plugin.config.slideLeftSelector);
-            secondLayer = $(plugin.config.secondLayerSelector); 
+            secondLayer = $(plugin.config.secondLayerSelector);
             thirdLayer  = $(plugin.config.thirdLayerSelector);
             wrapper     = page.parent();
             wrapper.height(page.height());
@@ -58,21 +61,20 @@
         };
 
         var attach = function() {
-
             // attach handlers to events
             page.on({
                 'touchstart': function(event) {
                     // http://stackoverflow.com/questions/671498/jquery-live-removing-iphone-touch-event-attributes
-                    touchStart(event.originalEvent);
+                    touchStart(event.originalEvent ? event.originalEvent : event);
                 },
                 'touchmove': function(event) {
-                    touchMove(event.originalEvent);
+                    touchMove(event.originalEvent ? event.originalEvent : event);
                 },
                 'touchcancel': function(event) {
-                    touchCancel(event.originalEvent);
+                    touchCancel(event.originalEvent ? event.originalEvent : event);
                 },
                 'touchend': function(event) {
-                    touchEnd(event.originalEvent);
+                    touchEnd(event.originalEvent ? event.originalEvent : event);
                 }
             });
 
@@ -80,19 +82,19 @@
             if (window.navigator.msPointerEnabled) {
                 page.on({
                     'MSPointerCancel': function(event) {
-                        touchCancel(event.originalEvent);
+                        touchCancel(event.originalEvent ? event.originalEvent : event);
                     },
                     'MSPointerDown': function(event) {
-                        touchStart(event.originalEvent);
+                        touchStart(event.originalEvent ? event.originalEvent : event);
                     },
                     'MSPointerMove': function(event) {
-                        touchMove(event.originalEvent);
+                        touchMove(event.originalEvent ? event.originalEvent : event);
                     },
                     'MSPointerOut': function(event) {
-                        touchCancel(event.originalEvent);
+                        touchCancel(event.originalEvent ? event.originalEvent : event);
                     },
                     'MSPointerUp': function(event) {
-                        touchEnd(event.originalEvent);
+                        touchEnd(event.originalEvent ? event.originalEvent : event);
                     }
                 });
             }
@@ -120,7 +122,6 @@
         };
 
         var touchStart = function(event) {
-
             var state = plugin.state;
 
             // get the total number of fingers touching the screen
@@ -129,17 +130,16 @@
             // since we're looking for a swipe (single finger) and not a gesture (multiple fingers),
             // check that only one finger was used
             if (state.touchesCount == 1) {
-                
                 // reset some pr swipe variables
                 state.isScrolling         = undefined;
                 state.deltaX              = 0;
                 state.startTouchXPosition = event.touches[0].pageX;
                 state.startTouchYPosition = event.touches[0].pageY;
-
                 // get the elements current position
-                if (typeof state.elementPosition == 'undefined') {
-                    state.elementPosition = page.position().left;
+				if (typeof state.elementPosition == 'undefined') {
+                    state.elementPosition = $(page).position().left;
                 }
+
 
             } else {
                 // not one finger touching, so cancel
@@ -148,7 +148,7 @@
         };
 
         var touchMove = function(event) {
-            
+
             var state   = plugin.state;
             var pagePos = 0;
 
@@ -164,22 +164,22 @@
                 if (typeof state.isScrolling == 'undefined') {
                     state.isScrolling = !!(state.isScrolling || Math.abs(state.deltaX) < Math.abs(deltaY));
                 }
-                
-                // move the element 
+
+                // move the element
                 if (!state.isScrolling) {
                     event.preventDefault();
 
                     pagePos = state.elementPosition + state.deltaX;
-                    
+
                     // Move second layer left with the finger when we go past the Y axis
                     if (pagePos < 0) {
                         secondLayer.css('left', pagePos);
                     }
 
                     // let the page follow the finger
-                    page.css('left', pagePos); 
+                    page.css('left', pagePos);
                 } else {
-                    if (state.elementPosition != 0) {
+                    if (state.elementPosition !== 0) {
                         // prevent normal scrolling when not viewing the main layer
                         event.preventDefault();
                     }
@@ -193,17 +193,17 @@
         var touchEnd = function(event) {
 
             var state = plugin.state;
-            
+
             // Check that we aren't scrolling and that we have X-axis movement with one finger touching
-            if (!state.isScrolling && state.deltaX != 0 && state.touchesCount == 1 && state.currentXTouchPosition != 0) {
-                
+            if (!state.isScrolling && state.deltaX !== 0 && state.touchesCount == 1 && state.currentXTouchPosition !== 0) {
+
                 // should we perform a swipe or snap back to old position?
-                var elementWidth        = page.width(); 
+                var elementWidth        = page.width();
                 var requiredSwipeLength = elementWidth * (plugin.config.minSwipeLength/100); // swipe length required to move the page
 
                 if (Math.abs(state.deltaX) > requiredSwipeLength) {
                     // Snap page into new position
-                    if (state.elementPosition == 0) {
+                    if (state.elementPosition === 0) {
                         if (state.deltaX > 0) {
                             movePage('right');
                         } else {
@@ -251,11 +251,11 @@
 
         // revert a swipe, for instance if suddenly a second finger is touching
         var revertSwipe = function(startPos) {
-            
-            var state    = plugin.state;
-            var returnTo = undefined;
 
-            if (state.elementPosition == 0) {
+            var state    = plugin.state,
+                returnTo;
+
+            if (state.elementPosition === 0) {
                 returnTo = 'center';
             } else if (state.elementPosition < 0) {
                 returnTo = 'left';
@@ -263,11 +263,11 @@
                 returnTo = 'right';
             }
 
-            movePage(returnTo); 
+            movePage(returnTo);
         };
 
         var movePage = function(direction) {
-            
+
             // Calculate endposition
             direction = typeof direction === 'undefined' ? 'center' : direction;
             var endPosition = 0;
@@ -310,7 +310,7 @@
     {
         return this.each(function() {
            var element = $(this);
-          
+
            // Return early if this element already has a plugin instance
            if (element.data('swipeable')) return;
 
