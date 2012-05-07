@@ -133,7 +133,7 @@
             var self = this;
             
             // Check that we aren't scrolling and that we have X-axis movement done with one finger
-            if (!this.isScrolling && self.deltaX != 0 && self.touchesCount == 1 && self.currentXTouchPosition != 0) {
+            if (!this.isScrolling && self.deltaX !== 0 && self.touchesCount == 1 && self.currentXTouchPosition !== 0) {
                 
                 // should we perform a swipe or snap back to old position?
                 var elementWidth        = self.element.width();

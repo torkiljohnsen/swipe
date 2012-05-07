@@ -15,7 +15,7 @@
   $.fn.clone = function(){
       var ret = $();
       this.each(function(){
-          ret.push(this.cloneNode(true))
+          ret.push(this.cloneNode(true));
       });
       return ret;
   };
@@ -63,12 +63,12 @@
           this[ method ] = val;
         }
       });
-    }
+    };
   });
 
   // Used by colorslider.js
   ['width', 'height'].forEach(function(dimension) {
-    var offset, Dimension = dimension.replace(/./, function(m) { return m[0].toUpperCase() });
+    var offset, Dimension = dimension.replace(/./, function(m) { return m[0].toUpperCase(); });
     $.fn['outer' + Dimension] = function(margin) {
       var elem = this;
       if (elem) {
@@ -117,7 +117,7 @@
       return nativeTrim.call(str);
     }
     characters = defaultToWhiteSpace(characters);
-    return str.replace(new RegExp('\^[' + characters + ']+|[' + characters + ']+$', 'g'), '');
+    return str.replace(new RegExp(/\^[' + characters + ']+|[' + characters + ']+$/g), '');
   };
 
   // Used by util.js

@@ -15,13 +15,13 @@
 (function($){
     var Swipeable = function(element, options)
     {
-        var plugin      = this;
-        var page        = $(element); // The main, touch-enabled layer
-        var rightButton = undefined;
-        var leftButton  = undefined;
-        var secondLayer = undefined;
-        var thirdLayer  = undefined;
-        var wrapper     = undefined;
+        var plugin      = this,
+            page        = $(element), // The main, touch-enabled layer
+            rightButton,
+            leftButton,
+            secondLayer,
+            thirdLayer,
+            wrapper;
 
         var defaults = {
             animationSpeed      : 150,           // speed of the transition
@@ -179,7 +179,7 @@
                     // let the page follow the finger
                     page.css('left', pagePos); 
                 } else {
-                    if (state.elementPosition != 0) {
+                    if (state.elementPosition !== 0) {
                         // prevent normal scrolling when not viewing the main layer
                         event.preventDefault();
                     }
@@ -195,7 +195,7 @@
             var state = plugin.state;
             
             // Check that we aren't scrolling and that we have X-axis movement with one finger touching
-            if (!state.isScrolling && state.deltaX != 0 && state.touchesCount == 1 && state.currentXTouchPosition != 0) {
+            if (!state.isScrolling && state.deltaX !== 0 && state.touchesCount == 1 && state.currentXTouchPosition !== 0) {
                 
                 // should we perform a swipe or snap back to old position?
                 var elementWidth        = page.width(); 
@@ -203,7 +203,7 @@
 
                 if (Math.abs(state.deltaX) > requiredSwipeLength) {
                     // Snap page into new position
-                    if (state.elementPosition == 0) {
+                    if (state.elementPosition === 0) {
                         if (state.deltaX > 0) {
                             movePage('right');
                         } else {
@@ -252,10 +252,10 @@
         // revert a swipe, for instance if suddenly a second finger is touching
         var revertSwipe = function(startPos) {
             
-            var state    = plugin.state;
-            var returnTo = undefined;
+            var state    = plugin.state,
+                returnTo;
 
-            if (state.elementPosition == 0) {
+            if (state.elementPosition === 0) {
                 returnTo = 'center';
             } else if (state.elementPosition < 0) {
                 returnTo = 'left';
