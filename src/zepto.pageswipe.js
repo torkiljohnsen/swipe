@@ -10,7 +10,7 @@
  *  also changed:   event passthrough
  *                  getting the position requires $(page[0]) instead of page
  * Dual licensed under the MIT and GPL licenses
- */                                               vmwa
+ */
 
 (function($){
     var Swipeable = function(element, options)
